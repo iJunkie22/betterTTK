@@ -8,6 +8,8 @@ class Props(object, Tkinter.Misc):
         self._text = None
         self._background = None
         self._foreground = None
+        self._style = None
+        self._var_store = None
 
     @property
     def text(self):
@@ -47,6 +49,29 @@ class Props(object, Tkinter.Misc):
             Style().foreground(value=value, style=c_style)
             self._foreground = value
 
+    @property
+    def style(self):
+        self._style = self.cget('style')
+        return self._style
+
+    @style.setter
+    def style(self, value):
+        self.configure(style=value)
+        self._style = value
+
+    @property
+    def value(self):
+        return self.getvar(self.cget('textvariable'))
+
+    @value.setter
+    def value(self, value):
+        if self.cget('textvariable') is None:
+            self._var_store = Tkinter.StringVar()
+            self.configure(textvariable=self._var_store)
+
+        textvar = self.cget('textvariable')
+        self.setvar(textvar, value)
+
 
 class Label(ttk.Label, Props):
         
@@ -56,26 +81,13 @@ class Label(ttk.Label, Props):
         else:
             return self.cget("font")
 
-    def style(self, style_name=None):
-        if style_name:
-            self.configure(style=style_name)
-        else:
-            return self.cget("style")
-
 
 class Button(ttk.Button, Props):
     pass
 
 
 class TextInput(ttk.Entry, Props):
-    @property
-    def value(self):
-        pass
-
-    @value.getter
-    def c_value(self):
-        textvar = self.cget('textvariable')
-        return self.getvar(textvar)
+    pass
 
 
 class Style(ttk.Style, object):

@@ -33,6 +33,8 @@ class Window1:
         self.txt_in_feet = vbForms.TextInput(self.mainframe, width=7, textvariable=self.feet)
         self.txt_in_feet.grid(column=2, row=1, sticky=(tk.W, tk.E))
 
+        self.txt_in_feet.style = 'test.TEntry'
+
         self.lbl_result = ttk.Label(self.mainframe, textvariable=self.meters)
         self.lbl_result.grid(column=2, row=2, sticky=(tk.W, tk.E))
 
@@ -62,19 +64,24 @@ class Window1:
         try:
             value = float(self.feet.get())
 
-            print self.txt_in_feet.value
+            self.txt_in_feet.foreground = 'black'
+            self.txt_in_feet.background = 'white'
             self.meters.set((0.3048 * value * 10000.0 + 0.5)/10000.0)
             self.lbl_feet.text = "words"
-            self.lbl_feet.style('My.TLabel')
+            self.lbl_feet.style = 'My.TLabel'
 
-            self.lbl_meters.style(self.style2)
+            self.lbl_meters.style = self.style2
 
             if value == 7.0:
+                print self.txt_in_feet.value
+                self.txt_in_feet.value = 5
+                print self.txt_in_feet.value
                 self.lbl_feet.foreground = 'green'
-            print self.lbl_feet.style()
+                self.txt_in_feet.background = 'green'
+                self.txt_in_feet.foreground = 'white'
+
         except ValueError:
             pass
-
 
 
 Window1()
