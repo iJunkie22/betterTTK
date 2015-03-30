@@ -2,7 +2,7 @@ __author__ = 'ethan'
 
 import Tkinter as tk
 import ttk
-import vbForms
+from . import vbForms
 
 
 class Window1:
